@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Chat Room</title>
+    
+
+</head>
+<body>
+    <div id="chat">
+        <div id="message-box"></div>
+        <div id="input-box">
+            <input type="text" id="message-input" placeholder="Type a message..." />
+            <button id="send-btn">Send</button>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        const messageBox = document.getElementById('message-box');
+        const messageInput = document.getElementById('message-input');
+        const sendButton = document.getElementById('send-btn');
+
+        // 사용자 이름 입력
+        const userName = prompt("Enter your name:");
+        socket.emit('join', userName);
+
+        // 서버로부터 메시지를 받을 때
+        socket.on('message', (message) => {
+            const isSelf = message.startsWith(`💬 ${userName}:`);
+            const name = message.split(':')[0].replace('💬 ', '');
+            const text = message.split(': ')[1];
+
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message');
+            if (isSelf) {
+                messageDiv.classList.add('self');
+            } else {
+                messageDiv.classList.add('other');
+            }
+
+            const nameDiv = document.createElement('div');
+            nameDiv.classList.add('name');
+            nameDiv.textContent = name;
+
+            const bubbleDiv = document.createElement('div');
+            bubbleDiv.classList.add('bubble');
+            bubbleDiv.textContent = text;
+
+            messageDiv.appendChild(nameDiv);
+            messageDiv.appendChild(bubbleDiv);
+            messageBox.appendChild(messageDiv);
+            messageBox.scrollTop = messageBox.scrollHeight; // 최신 메시지가 보이도록 스크롤 내림
+        });
+
+        // 메시지 전송 버튼 클릭
+        sendButton.addEventListener('click', () => {
+            const message = messageInput.value;
+            if (message.trim()) {
+                socket.emit('chatMessage', message); // 서버에 메시지 전송
+                messageInput.value = ''; // 입력창 비우기
+            }
+        });
+
+        // Enter 키로 메시지 전송
+        messageInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                sendButton.click();
+            }
+        });
+    </script>
+</body>
+</html> 

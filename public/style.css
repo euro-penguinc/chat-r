@@ -1,0 +1,121 @@
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fafafa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #chat {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 600px;
+            height: 80vh;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: white;
+        }
+
+        #message-box {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            background-color: white;
+        }
+
+        .message {
+            display: flex;
+            margin-bottom: 15px;
+            align-items: flex-end;
+        }
+
+        .message.other .bubble {
+            background-color: #efefef;
+            color: black;
+            align-self: flex-start;
+            border-radius: 18px 18px 18px 0;
+        }
+
+        .message.self .bubble {
+            background-color: #0095f6;
+            color: white;
+            align-self: flex-end;
+            border-radius: 18px 18px 0 18px;
+        }
+
+        .bubble {
+            max-width: 60%;
+            padding: 10px 15px;
+            font-size: 14px;
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+
+        .message.self {
+            justify-content: flex-end;
+        }
+
+        .message.other {
+            justify-content: flex-start;
+        }
+
+        .name {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 3px;
+            text-align: left;
+        }
+
+        #input-box {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #ddd;
+            background-color: #fafafa;
+        }
+
+        #input-box input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 20px;
+            background-color: #f0f0f0;
+            font-size: 14px;
+            outline: none;
+        }
+
+        #input-box button {
+            padding: 10px 15px;
+            margin-left: 10px;
+            background-color: #0095f6;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #input-box button:hover {
+            background-color: #007bb5;
+        }
+
+        /* 스크롤바 커스터마이징 */
+        #message-box::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #message-box::-webkit-scrollbar-thumb {
+            background-color: #ddd;
+            border-radius: 10px;
+        }
+
+        #message-box::-webkit-scrollbar-track {
+            background-color: transparent;
+        }
+  
